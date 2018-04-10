@@ -23,8 +23,49 @@ function shuffle(array) {
     }
 
     return array;
+};
+
+//add class open show
+//var x = document.getElementById("item");
+//x.addEventListener("click", iconFunction);
+var counter=0;
+var cardList=document.getElementsByClassName('card');
+for (var i=0 ;i<cardList.length;i++){
+	cardList[i].addEventListener("click", iconFunction);
+}
+function iconFunction() {
+	counter++;
+	this.classList.toggle("open");
+	this.classList.toggle("show");
+	var openCards = document.getElementsByClassName('open');
+	if (openCards.length==2){
+		
+		var icon1=openCards[0].getElementsByTagName('i')[0];
+		var icon2=openCards[1].getElementsByTagName('i')[0];
+		if (icon1.classList[1]== icon2.classList[1]) {
+			for (i=openCards.length-1; i>=0;i--){
+			openCards[i].classList.add('match');
+			openCards[i].classList.remove('show');	
+			openCards[i].classList.remove('open');
+			
+		}
+
+		}
+		else{
+			setTimeout(timingFunction, 1000)
+		}	
+		counter=0;
+	}
+};
+function timingFunction(){
+	var openCards = document.getElementsByClassName('open')
+		for (i=openCards.length-1; i>=0;i--){
+			openCards[i].classList.remove('show');	
+			openCards[i].classList.remove('open');
+		}
 }
 
+//
 
 /*
  * set up the event listener for a card. If a card is clicked:
