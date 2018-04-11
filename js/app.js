@@ -43,10 +43,16 @@ var cardList=document.getElementsByClassName('card');
 for (var i=0 ;i<cardList.length;i++){
 	cardList[i].addEventListener("click", iconFunction);
 }
-shuffleCards();
+
+shuffleCards();//calling shuffle function to shuffle cards
+
 function iconFunction() {
 	if (clickable){
 	moves++;
+	if (moves==1){
+		timer= setInterval(timeCalc,1000);
+	}
+	//condition of winning
 	if (moves>=15){
 		var stars=document.getElementById('starone');
 		stars.classList.add('hidden');
@@ -54,16 +60,14 @@ function iconFunction() {
 		var stars=document.getElementById('startwo');
 		stars.classList.add('hidden');
 	}
-	if (moves>=25){
-		var stars=document.getElementById('starthree');
-		stars.classList.add('hidden');
-	}
 	}
 
 
 	document.getElementById('moves-no').innerHTML = moves;
-	this.classList.toggle("open");
-	this.classList.toggle("show");
+	this.classList.add("open");
+	this.classList.add("show");
+	this.removeEventListener("click", iconFunction);
+	//condition of matching 2 cards with each other
 	var openCards = document.getElementsByClassName('open');
 	if (openCards.length==2){
 		
@@ -104,6 +108,9 @@ function iconFunction() {
 		else{
 			setTimeout(timingFunction, 1000);
 			clickable=false;
+			for (var i=0 ;i<openCards.length;i++){
+				openCards[i].addEventListener("click", iconFunction);
+			}
 		}	
 		counter=0;
 	}
@@ -123,7 +130,7 @@ function timingFunction(){
 var sec=0;
 var min=0;
 var timer;
-timer= setInterval(timeCalc,1000);
+
 function timeCalc(){
 	sec++;
 	if (sec>=60){
@@ -141,8 +148,6 @@ function startGame(){
 	var timeScreen=document.getElementById('timer');
 	timeScreen.innerHTML=min + " : " + sec;
 	clearInterval(timer);
-	timer= setInterval(timeCalc,1000);
-
 	for(i=cardList.length-1; i>=0;i--){
 			cardList[i].classList.remove('match');
 			cardList[i].classList.remove('show');
